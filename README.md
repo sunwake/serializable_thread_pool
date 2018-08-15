@@ -40,6 +40,7 @@ int threadpool_set_concurrence_check(threadpool_t *pool,check_func *checker);
 //添加任务 pool：线程池  routine：线程回调函数   arg：要传给routine的参数
 //释放或delete arg的函数
 //因为要在 check_func 中用到arg ，所以在routine不应该是否arg，而由线程池惰性释放
+
 int threadpool_add(threadpool_t *pool, void (*routine)(void *),
                    void *arg, void (*free)(void *) );
                    
