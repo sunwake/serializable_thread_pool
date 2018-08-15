@@ -1,8 +1,13 @@
 # serializable_thread_pool
-普通的线程池中，所有任务都是并行执行的，不适合某些场景：
-例如用线程池记录日志（多个日志文件），每次记录一条日志。
-对于不同的日志文件而言，可以并行记录；但是对于同一个日志文件，需要串行记录（日志是有顺序的）。
-普通的线程池不能保证属于同一文件的日志串行化记录，本线程池可以。
+这是一种特殊的线程池，适用于特定场景-- 在所有的任务当中，有需要串行化执行的一个或多个子集。
+
+在普通的线程池中，所有任务都是并行执行的，对于其中一些有关联的，需要串行执行的任务，则不适合使用这种线程池；
+
+例如一些任务涉及到写文件。对于写同一文件的不同任务，显然需要串行执行。
+
+然而普通线程池并不能满足这种场景--在普通线程池中所有任务都是并发执行的。
+
+可串行化线程池正是为类似的场景准备的。
 
 
 
@@ -24,11 +29,14 @@ typedef struct {
  
  
 //创建线程池
+
 threadpool_t *threadpool_create(int thread_count, int queue_size, int flags);
  
  
 //回调函数类型，用于检查两个任务是否可以并行执行
+
 typedef  bool check_func(const threadpool_task_t *t1,const threadpool_task_t *t2);
+
 //设置回调函数
 int threadpool_set_concurrence_check(threadpool_t *pool,check_func *checker);
  
@@ -38,7 +46,9 @@ int threadpool_set_concurrence_check(threadpool_t *pool,check_func *checker);
  
  
 //添加任务 pool：线程池  routine：线程回调函数   arg：要传给routine的参数
+
 //释放或delete arg的函数
+
 //因为要在 check_func 中用到arg ，所以在routine不应该是否arg，而由线程池惰性释放
 
 int threadpool_add(threadpool_t *pool, void (*routine)(void *),
