@@ -59,5 +59,6 @@ int threadpool_add(threadpool_t *pool, void (*routine)(void *),
  
 使用方法与普通的线程池相同，不过要在添加任务之前，设置并行检查函数。
 详细代码见 test
+
 本线程池已经生产环境检验。
 
