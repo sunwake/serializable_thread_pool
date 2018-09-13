@@ -12,7 +12,7 @@
 
 
 接口：
-
+`
 //任务结构体
 typedef struct {
     void (*function)(void *);//任务执行函数
@@ -48,7 +48,7 @@ int threadpool_set_concurrence_check(threadpool_t *pool,check_func *checker);
 int threadpool_add(threadpool_t *pool, void (*routine)(void *),
                    void *arg, void (*free)(void *) );
                    
-                   
+ `                  
  
 使用方法与普通的线程池相同，不过要在添加任务之前，设置并行检查函数。
 详细代码见 test
