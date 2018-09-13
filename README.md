@@ -13,9 +13,10 @@
 
 接口：
 //任务结构体
+
 typedef struct {
-    void (*function)(void *);//任务执行函数
-    void *argument;//function 参数
+	void (*function)(void *);//任务执行函数
+   	void *argument;//function 参数
 	void (*freer)(void *);//argument 惰性释放函数
 } task_t;
  
